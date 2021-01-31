@@ -1,0 +1,42 @@
+{% extends 'master/base.html' %}
+
+{% block title %}eWhisp - Susurros{% endblock %}
+
+{% block content %}
+<div class="my-3 p-3 bg-white rounded shadow-sm">
+  <h6 class="border-bottom pb-2 mb-0">Susurros recientes</h6>
+
+  {% for whisper in object_list %}
+    <div class="d-flex text-muted pt-3">
+      <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+
+      <p class="pb-3 mb-0 small lh-sm border-bottom" style="width: 100%;">
+        <span class="float-end">el {{ whisper.created_at }}</span>
+        <strong class="d-block text-gray-dark">@{{ whisper.username }}</strong>
+        {{ whisper.content }}
+      </p>
+    </div>
+  {% endfor %}
+
+  <div class="container-flow mt-3">
+    <div class="row">
+      <div class="col-6">
+        {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; Primera</a>
+          <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+        {% endif %}
+      </div>
+      <div class="col-6 text-end">
+        Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+      </div>
+    </div>
+  </div>
+  
+  
+</div>
+{% endblock %}
